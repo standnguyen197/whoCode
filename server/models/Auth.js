@@ -8,6 +8,7 @@ var AuthSchema = new mongoose.Schema({
   natinalID: String,
   phone: String,
   role_id: String,
+  serviceStatus: {type: Number, default: 0},
   created_date: { type: Date, default: Date.now }
 });
 

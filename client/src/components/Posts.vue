@@ -1,7 +1,7 @@
 <template>
   <div class="posts">
   
-    <h1><Icon type="more"></Icon> <Icon type="ios-timer-outline"></Icon> Posts</h1>
+    <h1> <Icon type="ios-speedometer-outline"></Icon> Posts</h1>
     <div v-if="posts.length > 0" class="table-wrap">
       <div>
         <router-link v-bind:to="{ name: 'addpost' }" class="">Add Post</router-link>
@@ -26,9 +26,11 @@
     <div v-else>
 
       There are no posts.. Lets add one now <br /><br />
-
+     
       <DatePicker type="datetime" placeholder="Xin chọn thời gian" style="width: 200px"></DatePicker>
       <router-link v-bind:to="{ name: 'authFacebook' }"><Button  type="primary" style="background:#2d8cf0;border-color:#2d8cf0" >ĐĂNG NHẬP</Button></router-link>
+    
+    
     </div>
   </div>
 </template>
@@ -43,32 +45,6 @@ export default {
       posts: [],
     }
   },
-  mounted () {
-    this.getPosts()
-  },
-  methods: {
-    async getPosts () {
-      const response = await PostsService.fetchPosts()
-      this.posts = response.data.posts
-    },
-    async deletePost (id) {
-      const $this = this
-      $this.$swal({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then(function () {
-        PostsService.deletePost(id)
-        $this.$router.go({
-          path: '/'
-        })
-      })
-    }
-  }
 }
 </script>
 <style type="text/css">

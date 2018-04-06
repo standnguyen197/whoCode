@@ -6,10 +6,12 @@
     @error="onSignInError">
     Đăng nhập Facebook
   </fb-signin-button>
+  <Button type="warning" @click="logOut">Warning</Button>
     </div>
 </template>
 <script>
 import axios from 'axios'
+import sha256 from 'sha256'
 import baseURI from '../../services/baseURI';
 export default {
   name: "authFacebook",
@@ -27,6 +29,7 @@ export default {
   methods: {
     onSignInSuccess(response) {
      var _this = this;
+     _this.$session.start();
      // ============= getLongAccessTokenUser ================ //
      var shortLivedToken = response.authResponse.accessToken;
       FB.api(
@@ -55,29 +58,25 @@ export default {
         .then(function (response) {
           const tokenJWT = response.data.token;
           const authInfo = response.data.userData;
-          const _idUser = response.data.userData._id;
-          const nameUser = response.data.userData.name;
-          const emailUser = response.data.userData.email;
-          const coverUser = response.data.userData.cover;
           const roleUser = response.data.userData.role_id;
+          const serviceStatus = response.data.userData.serviceStatus;
+          _this.$session.set('authTic', authInfo);
+          _this.$session.set('tokenJWT', tokenJWT);
 
-          _this.$localStorage.set('tokenJWT', tokenJWT);
-          _this.$localStorage.set('_idUser', _idUser);
-          _this.$localStorage.set('nameUser', nameUser);
-          _this.$localStorage.set('emailUser', emailUser);
-          _this.$localStorage.set('coverUser', coverUser);
-          _this.$cookies.set("roleUser", roleUser ,"60d");
+          if(serviceStatus == 0){
 
-          const roleCheck = _this.$cookies.get('roleUser');
-          const jwtCheck = _this.$localStorage.get('tokenJWT');
+            _this.$router.push('/dich-vu');
 
-         if(roleCheck == '0'){
-             _this.$router.push('/dash');
-         }else if(roleCheck == '1'){
-             _this.$router.push('/app');
-         }else{
-             _this.$router.push('/cpanel');
-         }
+          }else{
+                if(roleUser == '0'){
+                    _this.$router.push('/dash');
+                }else if(roleUser == '1'){
+                    _this.$router.push('/app');
+                }else{
+                    _this.$router.push('/cpanel');
+                }
+          }
+
 
         })
         .catch(function (error) {
@@ -103,6 +102,10 @@ export default {
             title: 'Thông báo',
             desc: 'Đăng nhập thành công!',
         });
+    },
+    logOut(){
+      this.$session.destroy();
+      this.$router.push('/');
     }
   }
 };

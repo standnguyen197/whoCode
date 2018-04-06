@@ -7,18 +7,21 @@ import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 import '@/assets/custom-less/index.less';
 import locale from 'iview/dist/locale/vi-VN';
-import { Button, Table , Icon , Switch } from 'iview';
+import { Button, Table , Icon , Switch , Sider} from 'iview';
 import FBSdk from './services/configFBSdk';
 import FBSignInButton from 'vue-facebook-signin-button'
 import VueCookies from 'vue-cookies';
 import VueLocalStorage from 'vue-localstorage'
- 
+import VueSession from 'vue-session'
+
+Vue.use(VueSession)
 Vue.use(VueLocalStorage)
 Vue.use(VueCookies);
 Vue.use(FBSignInButton);
 Vue.component('Button', Button);
 Vue.component('Table', Table);
 Vue.component('Icon', Icon);
+Vue.component('Sider', Sider);
 Vue.use(FBSdk);
 Vue.use(VueRouter);
 Vue.use(iView,{locale});
