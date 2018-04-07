@@ -7,6 +7,9 @@ import authFacebook from '@/components/authPage/'
 // ServicePage
 import servicePage from '@/components/sitePage/servicePage/'
 
+// ServiceSuccessPage
+import serviceSuccessPage from '@/components/sitePage/servicePage/serviceSuccess'
+
 Vue.use(Router)
 
 export default new Router({
@@ -26,6 +29,11 @@ export default new Router({
       path: '/dich-vu',
       component: servicePage,
       name: 'servicePage'
+    },
+    {
+      path: '/dich-vu/thanh-cong',
+      component: serviceSuccessPage,
+      name: 'serviceSuccessPage'
     }
   ]
 })

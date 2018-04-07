@@ -21,6 +21,7 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css?family=Baloo+Bhaina');
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

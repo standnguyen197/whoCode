@@ -15,10 +15,10 @@ mongoose.connect('mongodb://localhost:27017/ibee', { promiseLibrary: require('bl
 .catch((err) => console.error(err));
 // ===================== API ==================== //
 const authAPI = require('../api/authLocal/');
-
+const serviceAPI = require('../api/registerService/');
 // ===================== USE API ================== //
 app.use('/api/authLocal',authAPI);
-
+app.use('/api/registerService',serviceAPI);
 var Post = require("../models/post");
 
 app.get('/posts', (req, res) => {

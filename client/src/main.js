@@ -13,9 +13,19 @@ import FBSignInButton from 'vue-facebook-signin-button'
 import VueCookies from 'vue-cookies';
 import VueLocalStorage from 'vue-localstorage'
 import VueSession from 'vue-session'
+import VueTyperPlugin from 'vue-typer'
+import vueHeadful from 'vue-headful';
+import VueMoment from 'vue-moment';
+import moment from 'moment-timezone'
+require('moment/locale/vi')
 
-Vue.use(VueSession)
-Vue.use(VueLocalStorage)
+Vue.use(VueMoment, {
+  moment,
+})
+Vue.component('vue-headful', vueHeadful);
+Vue.use(VueTyperPlugin);
+Vue.use(VueSession);
+Vue.use(VueLocalStorage);
 Vue.use(VueCookies);
 Vue.use(FBSignInButton);
 Vue.component('Button', Button);

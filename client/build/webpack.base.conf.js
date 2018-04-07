@@ -75,7 +75,7 @@ module.exports = {
         }
       },
       {
-        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        test: /\.(svg|eot|ttf|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'url-loader',
         options: {
           limit: 10000,
