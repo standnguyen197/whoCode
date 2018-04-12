@@ -31,6 +31,49 @@ router.get('/:id', function(req, res, next) {
   });
 });
 
+/*  GET ROLE IN LOGIN DASHBOARD */
+
+router.post('/get', verifyToken, function(req, res, next) {
+    var bodyData = req.body;
+    var bodyUserID = req.body._id;
+    jwt.verify(req.token, 'thekingstand',(err,authData) => {
+      if(err){
+          res.sendStatus(403);
+      }else{
+          Auth.find({_id: bodyUserID}, 'role_id' ,function(err, result){
+              if(err){
+                  console.log("Something wrong when updating data!");
+              }else{
+                var newResult = result[0];
+                res.json(newResult);
+              }
+          });
+      }
+    })  
+  
+  });
+
+/*  UPDATE USE WHEN REGISTER SERVICE */
+
+router.post('/update', verifyToken, function(req, res, next) {
+    var bodyData = req.body;
+    var bodyUserID = req.body._id;
+    jwt.verify(req.token, 'thekingstand',(err,authData) => {
+      if(err){
+          res.sendStatus(403);
+      }else{
+          Auth.findOneAndUpdate({_id: bodyUserID}, {$set: bodyData}, {upsert: true,new: true}, function(err, doc){
+              if(err){
+                  console.log("Something wrong when updating data!");
+              }else{
+                res.json(doc);
+              }
+          });
+      }
+    })  
+  
+  });
+
 /* SAVE Auth */
 router.post('/', function(req, res, next) {
  const _idUser = req.body._id;

@@ -1,7 +1,7 @@
 <template>
     <div>
      <vue-headful
-            title="iBee.vn - Dịch vụ của iBee"
+            title="iBee.vn - Chào mừng đến với iBee"
             description="Dịch vụ của iBee.vn - Chúng tôi luôn Cố gắng vì nụ cười và sự hài lòng của bạn!"
         />
         <div class="layout">
@@ -26,7 +26,7 @@
         ></vue-typer>
         </p>
         <center>
-            <Button type="success" @click="pushToApp" style="margin-top: 27px;font-size:15px;padding: 12px 38px;">ĐẾN BẢNG QUẢN TRỊ <Icon type="checkmark-circled"></Icon> </Button>
+            <Button type="primary" @click="pushToConnect" style="margin-top: 27px;font-size:15px;padding: 12px 38px;">ĐẾN BẢNG QUẢN TRỊ  </Button>  <Button  @click="pushToHome" style="margin-left:5px;margin-top: 27px;font-size:15px;padding: 12px 38px;">TRANG CHỦ </Button>
         </center>
         </div>
     </div>    
@@ -41,6 +41,7 @@
     import navbar from '@/components/layout/sitePage/navbar';
     import axios from 'axios';
     import base_URI from '../../../services/baseURI';
+
     export default {
         components: {
             navbar
@@ -61,29 +62,34 @@
                  _this.nameUser = authName;
              }else{
                  _this.isActiveLogin = false;
-                 _this.$router.push('/');
+                _this.$router.push('/');
              }
         },
         methods:{
-            pushToApp(){
-                var _this = this;
+            pushToConnect(){
                 var authTic = this.$session.get('authTic');
+                var _this = this;
                 if(authTic){
-                    var tokenJWT = this.$session.get('tokenJWT');
                     var authName = this.$session.get('authTic').name;
+                    var tokenJWT = this.$session.get('tokenJWT');
                     var authID = this.$session.get('authTic')._id;
+
                     axios.post(`${base_URI}/api/authLocal/get`,{_id: authID},{ 
                             headers: { Authorization: `Bearer ${tokenJWT}` } 
                             }).then((results) => {
                             var roleUser = results.data.role_id;
-                            if(roleUser == 1){
-                                _this.$router.push('/app');
-                            }else{
-                                _this.$router.push('/dashboard');
-                            }
+                                if(roleUser == 0){
+                                    _this.$router.push('/dashboard');
+                                }else if(roleUser == 1){
+                                    _this.$router.push('/app');
+                                }else{
+                                    _this.$router.push('/cpanel');
+                                }
                             }).catch((e) => {
                                 console.log(e);
                             })
+
+                    
                 }else{
                     this.$Notice.warning({
                     title: 'Bạn chưa đăng nhập!',
@@ -91,6 +97,9 @@
                     });
                 }
 
+            },
+            pushToHome(){
+                    this.$router.push('/');
             },
             customCss(){
                 return `text-align:center;font-size:17px;color:#FFF;`

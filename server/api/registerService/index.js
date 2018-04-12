@@ -25,7 +25,16 @@ router.get('/', verifyToken, function(req, res, next) {
 /* GET SINGLE Auth BY ID */
 router.post('/', function(req, res, next) {
   var bodyData = req.body;
-  res.json(bodyData);
+  var bodyUserID = req.body.userID;
+  
+  RegisterServiceModel.findOneAndUpdate({userID: bodyUserID}, {$set: bodyData}, {upsert: true,new: true}, function(err, doc){
+    if(err){
+        console.log("Something wrong when updating data!");
+    }else{
+      res.json(doc);
+    }
+   
+});
 });
 
 /* GET SINGLE Auth BY ID */

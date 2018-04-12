@@ -16,9 +16,13 @@ mongoose.connect('mongodb://localhost:27017/ibee', { promiseLibrary: require('bl
 // ===================== API ==================== //
 const authAPI = require('../api/authLocal/');
 const serviceAPI = require('../api/registerService/');
+const priceUserAPI = require('../api/priceUser/');
+const appSettingsAPI = require('../api/appSettings/');
 // ===================== USE API ================== //
 app.use('/api/authLocal',authAPI);
 app.use('/api/registerService',serviceAPI);
+app.use('/api/priceUser',priceUserAPI);
+app.use('/api/appSettings', appSettingsAPI);
 var Post = require("../models/post");
 
 app.get('/posts', (req, res) => {
@@ -87,4 +91,15 @@ app.get('/post/:id', (req, res) => {
 	})
 })
 
-app.listen(process.env.PORT || 8081)
+var port = process.env.PORT || 8081;
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
+server.listen(port);
+
+
+io.on('connection', function (socket) {
+	console.log('Server connected socket');
+	socket.emit('customEmit', { hello: 'world' });
+});
+require('../libSystem/orderProduct/index')(io);

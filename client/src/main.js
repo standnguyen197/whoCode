@@ -18,7 +18,12 @@ import vueHeadful from 'vue-headful';
 import VueMoment from 'vue-moment';
 import moment from 'moment-timezone'
 require('moment/locale/vi')
-
+import 'vue-status-indicator/styles.css'
+//--- VUE-SOCKET-IO ----//
+import VueSocketio from 'vue-socket.io';
+Vue.use(VueSocketio, 'http://localhost:8081');
+Vue.use(VueSocketio, 'http://localhost:8080');
+Vue.use(VueLocalStorage)
 Vue.use(VueMoment, {
   moment,
 })

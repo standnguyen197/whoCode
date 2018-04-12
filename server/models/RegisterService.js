@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var RegisterServiceSchema = new mongoose.Schema({
-  userID: Number,
+  userID: String,
   priceService: String,
   startTimeService: Number,
   endTimeService: Number,

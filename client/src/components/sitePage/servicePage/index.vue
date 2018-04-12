@@ -26,7 +26,7 @@
         ></vue-typer>
         </p>
         <center>
-            <Button type="warning" @click="iBeeTrial" style="margin-top: 27px;font-size:15px;padding: 12px 38px;">DÙNG THỬ 7 NGÀY MIỄN PHÍ</Button>
+            <Button type="warning" @click="iBeeTrial" style="margin-top: 27px;font-size:15px;padding: 12px 38px;">DÙNG THỬ 7 NGÀY MIỄN PHÍ</Button> <Button @click="iBeeTrial" style="margin-left:5px; margin-top: 27px;font-size:15px;padding: 12px 38px;color:#222">KHÔNG! TÔI CÁM ƠN</Button>
         </center>
         </div>
     </div>    
@@ -99,7 +99,7 @@
         <ul class="price">
             <li class="header">iBee MemberShip</li>
             <li class="grey">800.000 VNĐ / 12 tháng</li>
-            <li>Thời gian: 350 ngày</li>
+            <li>Thời gian: 360 ngày</li>
             <li>Chức năng: đầy đủ</li>
             <li>Đơn hàng: không giới hạn</li>
             <li>Tạo voucher: đầy đủ</li>
@@ -149,7 +149,7 @@
                 if(authTic){
                     var authName = this.$session.get('authTic').name;
                     var authID = this.$session.get('authTic')._id;
-
+                    var tokenJWT = this.$session.get('tokenJWT');
                     // Start Register Serivce //
                     var onTimer = this.$moment(new Date()).format();
                     var startTimer = this.$moment(onTimer).format('X');
@@ -178,8 +178,19 @@
                         statusService,
                         typeService
                     };
-                     axios.post(`${base_URI}/api/registerService`, serviceData).then((result) => {
-                         console.log(result.data);
+                     axios.post(`${base_URI}/api/registerService`, serviceData,{ 
+                        headers: { Authorization: `Bearer ${tokenJWT}` } 
+                        }).then((result) => {
+
+                        axios.post(`${base_URI}/api/authLocal/update`,{_id: authID,serviceStatus: 1, role_id: 1},{ 
+                            headers: { Authorization: `Bearer ${tokenJWT}` } 
+                            }).then((results) => {
+                               this.$router.push('/dich-vu/thanh-cong');
+                            }).catch((e) => {
+
+                                console.log(e);
+                            })
+
                      }).catch((e) => {
                          console.log(e);
                      })
@@ -197,7 +208,39 @@
                 if(authTic){
                     var authName = this.$session.get('authTic').name;
                     var authID = this.$session.get('authTic')._id;
-                   
+                    // Start Register Serivce //
+                    var onTimer = this.$moment(new Date()).format();
+                    var startTimer = this.$moment(onTimer).format('X');
+
+                    // End Register Serivce //
+                    var _90dayTimer = this.$moment(new Date()).add(90, 'days').calendar(null, {
+                        lastWeek: 'YYYY-MM-DD HH:mm:ss',
+                        sameElse: 'YYYY-MM-DD HH:mm:ss'
+                    });
+
+                    var _onTimer = this.$moment(_90dayTimer).format();
+                    var endTimer = this.$moment(_onTimer).format('X');
+
+                    var userID = authID;
+                    var priceService = '280000';
+                    var endTimeService = endTimer;
+                    var startTimeService = startTimer;
+                    var statusService = '1'; // 1 là bắt đầu sử dụng dịch vụ! 0 là hết dịch vụ
+                    var typeService = '2' // Tức basic
+
+                    var serviceData = {
+                        userID,
+                        priceService,
+                        startTimeService,
+                        endTimeService,
+                        statusService,
+                        typeService
+                    };
+                     axios.post(`${base_URI}/api/registerService`, serviceData).then((result) => {
+                         console.log(result.data);
+                     }).catch((e) => {
+                         console.log(e);
+                     })
                 }else{
                     this.$Notice.warning({
                     title: 'Bạn chưa đăng nhập!',
@@ -211,7 +254,40 @@
                 if(authTic){
                     var authName = this.$session.get('authTic').name;
                     var authID = this.$session.get('authTic')._id;
-                   
+
+                    // Start Register Serivce //
+                    var onTimer = this.$moment(new Date()).format();
+                    var startTimer = this.$moment(onTimer).format('X');
+
+                    // End Register Serivce //
+                    var _180dayTimer = this.$moment(new Date()).add(180, 'days').calendar(null, {
+                        lastWeek: 'YYYY-MM-DD HH:mm:ss',
+                        sameElse: 'YYYY-MM-DD HH:mm:ss'
+                    });
+
+                    var _onTimer = this.$moment(_180dayTimer).format();
+                    var endTimer = this.$moment(_onTimer).format('X');
+
+                    var userID = authID;
+                    var priceService = '550000';
+                    var endTimeService = endTimer;
+                    var startTimeService = startTimer;
+                    var statusService = '1'; // 1 là bắt đầu sử dụng dịch vụ! 0 là hết dịch vụ
+                    var typeService = '3' // Tức pro
+
+                    var serviceData = {
+                        userID,
+                        priceService,
+                        startTimeService,
+                        endTimeService,
+                        statusService,
+                        typeService
+                    };
+                     axios.post(`${base_URI}/api/registerService`, serviceData).then((result) => {
+                         console.log(result.data);
+                     }).catch((e) => {
+                         console.log(e);
+                     })
                 }else{
                     this.$Notice.warning({
                     title: 'Bạn chưa đăng nhập!',
@@ -224,7 +300,39 @@
                 if(authTic){
                     var authName = this.$session.get('authTic').name;
                     var authID = this.$session.get('authTic')._id;
-                   
+                   // Start Register Serivce //
+                    var onTimer = this.$moment(new Date()).format();
+                    var startTimer = this.$moment(onTimer).format('X');
+
+                    // End Register Serivce //
+                    var _360dayTimer = this.$moment(new Date()).add(360, 'days').calendar(null, {
+                        lastWeek: 'YYYY-MM-DD HH:mm:ss',
+                        sameElse: 'YYYY-MM-DD HH:mm:ss'
+                    });
+
+                    var _onTimer = this.$moment(_360dayTimer).format();
+                    var endTimer = this.$moment(_onTimer).format('X');
+
+                    var userID = authID;
+                    var priceService = '800000';
+                    var endTimeService = endTimer;
+                    var startTimeService = startTimer;
+                    var statusService = '1'; // 1 là bắt đầu sử dụng dịch vụ! 0 là hết dịch vụ
+                    var typeService = '3' // Tức pro
+
+                    var serviceData = {
+                        userID,
+                        priceService,
+                        startTimeService,
+                        endTimeService,
+                        statusService,
+                        typeService
+                    };
+                     axios.post(`${base_URI}/api/registerService`, serviceData).then((result) => {
+                         console.log(result.data);
+                     }).catch((e) => {
+                         console.log(e);
+                     })
                 }else{
                     this.$Notice.warning({
                     title: 'Bạn chưa đăng nhập!',

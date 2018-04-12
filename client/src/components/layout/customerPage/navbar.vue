@@ -5,22 +5,13 @@
                 <Menu mode="horizontal" class="serviceBg" theme="dark" active-name="1" >
                     <div class="layout-logo"></div>
                     <div class="layout-nav" v-if="isActiveMenuToggle">
-                        <MenuItem name="1">
-                            <router-link :to="{ path: `/` }">Trang chủ</router-link>
+                         <MenuItem name="1">
+                            <router-link :to="{ path: '/dich-vu' }">DỊCH VỤ</router-link>
                         </MenuItem>
-                        <MenuItem  name="2">
-                            <router-link :to="{ path: `/gioi-thieu` }">Giới thiệu</router-link>
+                        <MenuItem name="2">
+                            <router-link :to="{ path: '/lien-he' }">LIVE SUPPORT <status-indicator negative pulse></status-indicator></router-link>
                         </MenuItem>
-                        <MenuItem name="3">
-                            <router-link :to="{ path: '/huong-dan' }">Hướng dẫn</router-link>
-                        </MenuItem>
-                         <MenuItem name="4">
-                            <router-link :to="{ path: '/dich-vu' }">Dịch vụ</router-link>
-                        </MenuItem>
-                        <MenuItem name="5">
-                            <router-link :to="{ path: '/lien-he' }">Liên hệ</router-link>
-                        </MenuItem>
-                        <MenuItem name="6" style="float: right;" v-if="isActiveLogin">
+                        <MenuItem name="3" style="float: right;" v-if="isActiveLogin">
                                 <Dropdown trigger="click" style="margin-left: 20px">
                                     <a href="javascript:void(0)">
                                        <Avatar :src="coverUser" /> TÀI KHOẢN
@@ -29,7 +20,6 @@
                                     <DropdownMenu slot="list" style="text-align:left">
                                         <DropdownItem><span style="    color: #ffae2a;"><Icon type="social-usd-outline"  color="#ff9900"></Icon> Tài khoản : 0 VNĐ</span></DropdownItem>
                                         <DropdownItem><Icon type="arrow-right-b"></Icon> Trang cá nhân</DropdownItem>
-                                        <DropdownItem><Icon type="arrow-right-b"></Icon> Truy cập Dashboard <Icon type="radio-waves" color="#ed3f14"></Icon></DropdownItem>
                                         <DropdownItem><Icon type="arrow-right-b"></Icon> Nâng cấp tài khoản</DropdownItem>
                                         <DropdownItem><Icon type="arrow-right-b"></Icon> Cài đặt tài khoản</DropdownItem>
                                         <DropdownItem><Button v-on:click="logOut" type="primary" size="small" long>Đăng xuất </Button></DropdownItem>
@@ -48,8 +38,7 @@
                                     </a>
                                     <DropdownMenu slot="list">
                                         <DropdownItem>Trang chủ</DropdownItem>
-                                        <DropdownItem>Giới thiệu</DropdownItem>
-                                        <DropdownItem>Hướng dẫn</DropdownItem>
+                                        
                                         <DropdownItem>
                                             <router-link style="color: #1b1b1b;" :to="{ path: '/dich-vu' }">Dịch vụ</router-link>
                                         </DropdownItem>
@@ -62,7 +51,6 @@
                                            <DropdownMenu slot="list" style="text-align:left">
                                             <DropdownItem><span style="    color: #ffae2a;">Tài khoản : 0 VNĐ</span></DropdownItem>
                                             <DropdownItem>Trang cá nhân</DropdownItem>
-                                            <DropdownItem>Truy cập Dashboard <Icon type="radio-waves" color="#ed3f14"></Icon></DropdownItem>
                                             <DropdownItem>Nâng cấp tài khoản</DropdownItem>
                                             <DropdownItem>Cài đặt tài khoản</DropdownItem>
                                             <DropdownItem><Button v-on:click="logOut" type="primary" size="small" long>Đăng xuất </Button></DropdownItem>
@@ -85,8 +73,12 @@
     </div>
 </template>
 <script>
+import StatusIndicator from 'vue-status-indicator'
     export default {
         name: 'navbar',
+        components:{
+            StatusIndicator
+        },
         data(){
         return {
                 isActiveLogin : false,
@@ -212,7 +204,7 @@
     border-radius: 16px;
 }
 .layout-nav{
-    width: 520px;
+    width: 360px;
     margin: 0 auto;
     margin-right: 10px;
 }

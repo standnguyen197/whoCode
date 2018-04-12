@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       fbSignInParams: {
-        scope: "email,user_likes",
+        scope: 'email,user_videos',
         return_scopes: true
       },
       authInfo:{
@@ -38,7 +38,7 @@ export default {
         {"grant_type":"fb_exchange_token","client_id":"126856184657575","client_secret":"f69f3f7d510fc2a421208e8e276e5b76","fb_exchange_token":`${shortLivedToken}`},
         function(responseToken) {
             var longAccessTokenUser = responseToken.access_token;
-            _this.$cookies.set("longAccessTokenUser", longAccessTokenUser ,"60d");
+            _this.$session.set("longAccessTokenUser", longAccessTokenUser);
         }
     );
 
@@ -58,23 +58,26 @@ export default {
         .then(function (response) {
           const tokenJWT = response.data.token;
           const authInfo = response.data.userData;
-          const roleUser = response.data.userData.role_id;
+          const userID = response.data.userData._id;
           const serviceStatus = response.data.userData.serviceStatus;
           _this.$session.set('authTic', authInfo);
           _this.$session.set('tokenJWT', tokenJWT);
 
           if(serviceStatus == 0){
-
             _this.$router.push('/dich-vu');
 
-          }else{
-                if(roleUser == '0'){
-                    _this.$router.push('/dash');
-                }else if(roleUser == '1'){
-                    _this.$router.push('/app');
-                }else{
-                    _this.$router.push('/cpanel');
-                }
+           axios.post(`${baseURI}/api/PriceUser/createDefault`, {userID},{ 
+              headers: { Authorization: `Bearer ${tokenJWT}` } 
+            }).then((dataResult) => {  
+                console.log(dataResult);
+              }).catch((e) => {
+                console.log(e);
+              });
+
+            }else{
+
+             _this.$router.push('/welcome');
+              
           }
 
 
