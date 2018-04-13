@@ -16,6 +16,8 @@
     "cors": "^2.8.4",
     "express": "^4.15.4",
     "jsonwebtoken": "^8.2.0",
+    "moment": "^2.22.0",
+    "moment-timezone": "^0.5.14",
     "mongoose": "^5.0.12",
     "morgan": "^1.8.2",
     "nodemon": "^1.17.3",

@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var liveSettingsModel = require('../../models/liveSettings');
 var jwt = require('jsonwebtoken');
-
+// MODEL
+var liveSettingsModel = require('../../models/LiveSetting');
 
 /* POST LIVESETTINGS */
 router.post('/liveSettings', verifyToken, function(req, res, next) {

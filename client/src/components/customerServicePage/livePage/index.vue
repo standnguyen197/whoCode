@@ -193,7 +193,7 @@
             <!-- =========== SIDEBAR RIGHT ============= -->
             <Col :sm="{ span: 2}" :md="{ span: 2}" :lg="{ span: 1}" style="padding-top:10px;background: rgb(72, 72, 72);height:100vh">
             <Tooltip placement="left-start" content="ĐƠN HÀNG CỦA BẠN">
-            <Badge count="99">
+            <Badge :count="countNumberOrder">
                 <Button type="warning" @click="modal = true" class="sidebarRight"><Icon type="clipboard"></Icon></Button>
             </Badge>
             </Tooltip>
@@ -291,7 +291,8 @@ import sidebar from '@/components/layout/customerServicePage/indexPage/sidebar'
                 modal: false,
                 modalT: false,
                 modalOption: false,
-                modalCheckLive: false
+                modalCheckLive: false,
+                countNumberOrder: 0
             }
         },
          sockets:{
@@ -314,6 +315,9 @@ import sidebar from '@/components/layout/customerServicePage/indexPage/sidebar'
                 this.messageFBNow = value.messageFB;
                 this.avatarFBNow = value.avatarFB;
                 this.isActiveNowComment = true;
+            },
+            replyGetNumberOrder(value){
+                this.countNumberOrder = value.totalNumberOrder;
             }
         },
         created(){
